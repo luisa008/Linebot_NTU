@@ -21,7 +21,7 @@ def section0(event, User_Info):
         if event.message.text == "遊戲開始":
             reply = [] #一次可傳多對話，至多五句
             reply.append(TextSendMessage("剛下課又餓又累的我，在尋找腳踏車的時候，卻怎麼樣也找不到我的腳踏車，只剩下大笨鳥週的車宣掉在地上。突然，我聽到一個奇怪的聲音……"))
-            reply.append(TextSendMessage("大笨鳥的靈魂：我….我只是想吃蚯蚓而已….為什麼要這樣對我？什麼？你說你也不知道我在說什麼？但那明明就是你的腳踏車啊！！你真的不知道嗎？"))
+            reply.append(TextSendMessage("\U0001F426大笨鳥的靈魂：我….我只是想吃蚯蚓而已….為什麼要這樣對我？什麼？你說你也不知道我在說什麼？但那明明就是你的腳踏車啊！！你真的不知道嗎？"))
             reply.append(TextSendMessage("（你如果不知道請輸入: 「我不知道」；如果假裝知道則輸入「我知道」）"))
             line_bot_api.reply_message(  # 回復傳入的訊息文字
                 event.reply_token, reply)
@@ -98,7 +98,7 @@ def section2(event, User_Info):
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=1)
             else:
-                line_bot_api.reply_message(event.reply_token, TextSendMessage("我現在應該要去駐警隊問吧? 請輸入：「我到駐警隊」"))
+                line_bot_api.reply_message(event.reply_token, TextSendMessage("我現在應該要去駐警隊問吧? 請輸入：「我到駐警隊了」"))
         elif user_info.part == 1:
             if event.message.text == "朴樹":
                 reply = [] #一次可傳多對話，至多五句
@@ -146,17 +146,10 @@ def section4(event, User_Info):
         if user_info.part == 0:
             if event.message.text == "我到圖書館了":
                 reply = [] #一次可傳多對話，至多五句
-                reply1 =[]
-                reply.append(TextSendMessage("我：請問你剛剛有看到什麼可疑、匆忙的人衝進圖書館嗎？"))
-                reply.append(TextSendMessage("館員：沒有耶，我們的讀者都是很文雅的，沒有什麼人會用衝的進來，而且圖書館也不能奔跑喔！"))
-                reply.append(TextSendMessage("我：嗯…好吧"))
+                reply.append(TextSendMessage("我：請問你剛剛有看到什麼可疑、匆忙的人衝進圖書館嗎？\n館員：沒有耶，我們的讀者都是很文雅的，沒有什麼人會用衝的進來，而且圖書館也不能奔跑喔！\n我：嗯…好吧"))
                 reply.append(TextSendMessage("館員：啊，是說我好像有印象，有一個人整張臉皺成一團，看起來很緊張，褲子上沾滿一些紅色的汙漬。我就覺得很討厭呀！感覺就是剛去棒球場比完棒球或壘球，打輸了，但是好歹也把褲子上的紅土清理乾淨再進來吧？"))
-                reply1.append(TextSendMessage("我：那個人後來往哪邊走了？"))
-                reply1.append(TextSendMessage("館員：他朝我方向走過來啊！他給我一張紙條，我拿來看，上面是一堆文字跟數字，他叫我幫他查這張紙代表的東西，我就罵他啊，我說這不是我要提供的服務"))
-                reply1.append(TextSendMessage("我：所以那是什麼？"))
-                reply1.append(TextSendMessage("館員：我可以直接把紙條送給你"))
+                reply.append(TextSendMessage("我：那個人後來往哪邊走了？\n館員：他朝我方向走過來啊！他給我一張紙條，我拿來看，上面是一堆文字跟數字，他叫我幫他查這張紙代表的東西，我就罵他啊，我說這不是我要提供的服務\n我：所以那是什麼？\n館員：我可以直接把紙條送給你"))
                 line_bot_api.reply_message(event.reply_token, reply)
-                line_bot_api.reply_message(event.reply_token, reply1)
                 #紙條圖片
                 User_Info.objects.filter(uid=event.source.user_id).update(part=1)
             else:
@@ -208,17 +201,13 @@ def section6(event, User_Info):
         if user_info.part == 0:
             if event.message.text == "行政大樓":
                 reply = [] #一次可傳多對話，至多五句
-                reply1 = []
                 reply.append(TextSendMessage("到行政大樓後，我前往註冊組詢問"))
                 reply.append(TextSendMessage("我: 不好意思，我想問這個舊的學生證是誰的，後來換到哪個系了? 我強烈懷疑他偷了我的腳踏車，還輾過大笨鳥!"))
                 reply.append(TextSendMessage("職員A: 這個資訊涉及個人隱私，不能隨便洩漏"))
                 reply.append(TextSendMessage("我: 可是我已經去駐警隊報案了耶"))
-                reply.append(TextSendMessage("職員A: 在警衛來確認之前都不行"))
-                reply1.append(TextSendMessage("我: 大笨鳥，我們在學校跑來跑去還是得不到答案，還是乾脆去外面警察局報案算了...?"))
-                reply1.append(TextSendMessage("職員B: (偷偷地)同學你看起來這麼聰明，一定知道傅鐘的歷史在「幾度」。那個A齁，常常找人問這些問題，裝的自己什麼都知道一樣，這次一定要剉剉他的銳氣。只要告訴我答案，我就去幫你查學生證。"))
+                reply.append(TextSendMessage("職員A: 在警衛來確認之前都不行\n我: 大笨鳥，我們在學校跑來跑去還是得不到答案，還是乾脆去外面警察局報案算了...?\n職員B: (偷偷地)同學你看起來這麼聰明，一定知道傅鐘的歷史在「幾度」。那個A齁，常常找人問這些問題，裝的自己什麼都知道一樣，這次一定要剉剉他的銳氣。只要告訴我答案，我就去幫你查學生證。"))
                 #資工系謎題圖片
                 line_bot_api.reply_message(event.reply_token, reply)
-                line_bot_api.reply_message(event.reply_token, reply1)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=1)
             else:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage("如果真的不知道可以上網查喔"))
@@ -261,17 +250,13 @@ def section7(event, User_Info):
         elif user_info.part == 2:
             if event.message.text == "27":
                 reply = [] #一次可傳多對話，至多五句
-                reply1 = []
                 reply.append(TextSendMessage("（在小動物們的協助下，腳踏車成功被打撈出來）"))
                 reply.append(TextSendMessage("（我開心的手舞足蹈，跟著動物一起跳I like to move it）"))
                 reply.append(TextSendMessage("醉月湖中的鵝：腳踏車之外，這是你誠實相告的額外獎勵！(拿出一張金色的紙條)"))
                 #金色紙條圖片
                 reply.append(TextSendMessage("犯人其實覺得很對不起，希望到只有文字的學院之樹找他"))
-                reply.append(TextSendMessage("我：雖然拿到腳踏車了，但我們還是有必要知道真相！對吧大笨鳥？"))
-                reply1.append(TextSendMessage("大笨鳥的靈魂：沒錯沒錯，走吧，學院之樹在社科院詩牆。"))
-                reply1.append(TextSendMessage("據說社科院詩牆有這麼一首詩存在，到社科院詩牆後請輸入「我到詩牆了」"))
+                reply.append(TextSendMessage("我：雖然拿到腳踏車了，但我們還是有必要知道真相！對吧大笨鳥？\n大笨鳥的靈魂：沒錯沒錯，走吧，學院之樹在社科院詩牆。\n據說社科院詩牆有這麼一首詩存在，到社科院詩牆後請輸入「我到詩牆了」"))
                 line_bot_api.reply_message(event.reply_token, reply)
-                line_bot_api.reply_message(event.reply_token, reply1)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=0)
                 User_Info.objects.filter(uid=event.source.user_id).update(section=8)
             else:
