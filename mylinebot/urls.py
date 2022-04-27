@@ -16,13 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
-from django.conf import settings
-from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ntubot/', include('ntubot.urls')) #包含應用程式的網址
 ]
-
-if settings.LOCAL_SERVE_STATIC_FILES:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
