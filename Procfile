@@ -1,1 +1,1 @@
-worker: python3 manage.py runserver $PORT
+web: gunicorn mylinebot/wsgi:app
