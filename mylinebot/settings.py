@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-d&l9nls0#t4^wshk4_o(8h#2-=z8275*^8r1dqhzv^mlp)6+1_
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'd3fb-180-217-28-167.jp.ngrok.io'  #允許的網域名稱
+    'ntubotbike.herokuapp.com/'  #允許的網域名稱
 ]
 
 
@@ -133,6 +133,6 @@ LINE_CHANNEL_ACCESS_TOKEN = 'aXcIV+zGe94Fe0kI3oRz/wINViwedt6L49tpc3nUPetzKUjY2yx
  
 LINE_CHANNEL_SECRET = '66d1e62d99ecd3ae3402d9947cef2567'
 
-CSRF_TRUSTED_ORIGINS = ['https://localhost:8000']
-# CORS_ALLOWED_ORIGINS = ['https://localhost:8000']
+CSRF_TRUSTED_ORIGINS = ['https://ntubotbike.herokuapp.com/']
+# CORS_ALLOWED_ORIGINS = ['https://ntubotbike.herokuapp.com/']
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
