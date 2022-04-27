@@ -27,6 +27,7 @@ SECRET_KEY = 'django-insecure-d&l9nls0#t4^wshk4_o(8h#2-=z8275*^8r1dqhzv^mlp)6+1_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+SERVER_HOST = 'ntubotbike.herokuapp.com'
 ALLOWED_HOSTS = [
     'ntubotbike.herokuapp.com'  #允許的網域名稱
 ]

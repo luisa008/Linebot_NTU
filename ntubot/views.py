@@ -12,7 +12,7 @@ from pathlib import Path
  
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
-imageurl = "https://" + settings.ALLOWED_HOSTS + settings.STATIC_URL
+imageurl = "https://" + settings.SERVER_HOST + settings.STATIC_URL
  
 def section0(event, User_Info):
     # line_bot_api.push_message('Uc33f69ade360a9d6517282418d213b34', TextSendMessage(text='你可以開始了'))
