@@ -1,3 +1,4 @@
 django
 line-bot-sdk
 gunicorn
+whitenoise
