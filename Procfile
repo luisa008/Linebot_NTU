@@ -1,1 +1,1 @@
-web: python3 manage.py runserver $PORT
+worker: python3 manage.py runserver $PORT
