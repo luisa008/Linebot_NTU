@@ -12,7 +12,7 @@ from pathlib import Path
  
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
-imageurl = "http://ntubotbike.herokuapp.com/static/"
+imageurl = "https://ntubotbike.herokuapp.com/static/"
  
 def section0(event, User_Info):
     # line_bot_api.push_message('Uc33f69ade360a9d6517282418d213b34', TextSendMessage(text='你可以開始了'))
@@ -23,8 +23,7 @@ def section0(event, User_Info):
             reply = [] #一次可傳多對話，至多五句
             reply.append(TextSendMessage("剛下課又餓又累的我，在尋找腳踏車的時候，卻怎麼樣也找不到我的腳踏車，只剩下大笨鳥週的車宣掉在地上。突然，我聽到一個奇怪的聲音……"))
             reply.append(TextSendMessage("\U0001F426大笨鳥的靈魂：我….我只是想吃蚯蚓而已….為什麼要這樣對我？什麼？你說你也不知道我在說什麼？但那明明就是你的腳踏車啊！！你真的不知道嗎？"))
-            print(imageurl+"遊戲開始.jpg")
-            reply.append(ImageSendMessage(original_content_url=imageurl+"遊戲開始.jpg",preview_image_url=imageurl+"遊戲開始.jpg"))
+            reply.append(ImageSendMessage(original_content_url=imageurl+"遊戲開始.jpg",preview_image_url="https://i.imgur.com/fFXWDOw.png"))
             reply.append(TextSendMessage("（你如果不知道請輸入: 「我不知道」；如果假裝知道則輸入「我知道」）"))
             line_bot_api.reply_message(  # 回復傳入的訊息文字
                 event.reply_token, reply)
