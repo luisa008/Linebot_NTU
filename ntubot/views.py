@@ -12,7 +12,6 @@ from pathlib import Path
  
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
-imageurl = "https://ntubotbike.herokuapp.com/static/"
  
 def section0(event, User_Info):
     # line_bot_api.push_message('Uc33f69ade360a9d6517282418d213b34', TextSendMessage(text='你可以開始了'))
@@ -23,7 +22,7 @@ def section0(event, User_Info):
             reply = [] #一次可傳多對話，至多五句
             reply.append(TextSendMessage("剛下課又餓又累的我，在尋找腳踏車的時候，卻怎麼樣也找不到我的腳踏車，只剩下大笨鳥週的車宣掉在地上。突然，我聽到一個奇怪的聲音……"))
             reply.append(TextSendMessage("\U0001F426大笨鳥的靈魂：我….我只是想吃蚯蚓而已….為什麼要這樣對我？什麼？你說你也不知道我在說什麼？但那明明就是你的腳踏車啊！！你真的不知道嗎？"))
-            reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/fFXWDOw.png",preview_image_url="https://i.imgur.com/fFXWDOw.png"))
+            reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/ra4iTVO.jpg",preview_image_url="https://i.imgur.com/ra4iTVO.jpg"))
             reply.append(TextSendMessage("（你如果不知道請輸入: 「我不知道」；如果假裝知道則輸入「我知道」）"))
             line_bot_api.reply_message(  # 回復傳入的訊息文字
                 event.reply_token, reply)
@@ -97,7 +96,8 @@ def section2(event, User_Info):
                 reply = [] #一次可傳多對話，至多五句
                 reply.append(TextSendMessage("\U0001F46E警衛: 同學請問有什麼事嗎?"))
                 reply.append(TextSendMessage("\U0001F469我: 我的腳踏車不見了，想請你們幫忙調閱監視器!"))
-                reply.append(TextSendMessage("\U0001F46E警衛(一邊查監視器)：喔對了同學，最近一直有人來抱怨這附近有一棵「看起來很危險，會壓到兩個人」的樹，叫駐警隊處理，雖然維護校園安全是我們的工作範圍啦，可是講這麼模糊誰知道阿？你可以幫我調查一下是怎麼回事嗎？\n請你輸入「是什麼樹」看起來快要壓到兩個人了？"))
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/5KjQVSp.jpg",preview_image_url="https://i.imgur.com/5KjQVSp.jpg"))
+                reply.append(TextSendMessage("\U0001F46E警衛(一邊查監視器)：喔對了同學，最近一直有人來抱怨這附近有一棵「看起來很危險，會壓到兩個人」的樹，叫駐警隊處理，雖然維護校園安全是我們的工作範圍啦，可是講這麼模糊誰知道阿？你可以幫我調查一下是怎麼回事嗎？\n\n請你輸入「是什麼樹」看起來快要壓到兩個人了？"))
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=1)
             else:
@@ -126,7 +126,7 @@ def section3(event, User_Info):
                 reply.append(TextSendMessage("\U0001F9D0學生:明明這裡都有動物穿越減速慢行的路牌，那個人車還是騎得很快，結果撞死大笨鳥後就跑了，這已經不是第一次了。"))
                 reply.append(TextSendMessage("\U0001F469我：那你有看到犯人壓到大笨鳥後去了哪裡嗎？"))
                 reply.append(TextSendMessage("\U0001F9D0學生:好像有看到往哪裡去......，不過我在進行科普閱讀的推廣與實踐，你看起來是個聰明人，我把答案包裝成謎題，你自己去找尋答案吧，相信難不倒你。"))
-                reply.append(TextSendMessage("「犯人的去向，路牌會『合力』告訴你。」\n請你輸入犯人是往哪棟建築物去了？"))
+                reply.append(TextSendMessage("「犯人的去向，路牌會『合力』告訴你。」\n\n請你輸入犯人是往哪棟建築物去了？"))
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=1)
             else:
@@ -149,9 +149,9 @@ def section4(event, User_Info):
         if user_info.part == 0:
             if event.message.text == "我到圖書館了":
                 reply = [] #一次可傳多對話，至多五句
-                reply.append(TextSendMessage("\U0001F469我：請問你剛剛有看到什麼可疑、匆忙的人衝進圖書館嗎？\n\U0001F4DA館員：沒有耶，我們的讀者都是很文雅的，沒有什麼人會用衝的進來，而且圖書館也不能奔跑喔！\n\U0001F469我：嗯…好吧"))
+                reply.append(TextSendMessage("\U0001F469我：請問你剛剛有看到什麼可疑、匆忙的人衝進圖書館嗎？\n\n\U0001F4DA館員：沒有耶，我們的讀者都是很文雅的，沒有什麼人會用衝的進來，而且圖書館也不能奔跑喔！\n\n\U0001F469我：嗯…好吧"))
                 reply.append(TextSendMessage("\U0001F4DA館員：啊，是說我好像有印象，有一個人整張臉皺成一團，看起來很緊張，褲子上沾滿一些紅色的汙漬。我就覺得很討厭呀！感覺就是剛去棒球場比完棒球或壘球，打輸了，但是好歹也把褲子上的紅土清理乾淨再進來吧？"))
-                reply.append(TextSendMessage("\U0001F469我：那個人後來往哪邊走了？\n\U0001F4DA館員：他朝我方向走過來啊！他給我一張紙條，我拿來看，上面是一堆文字跟數字，他叫我幫他查這張紙代表的東西，我就罵他啊，我說這不是我要提供的服務\n\U0001F469我：所以那是什麼？\n\U0001F4DA館員：我可以直接把紙條送給你\n請你進圖書館翻書，輸入那位讀者要找的答案是什麼？"))
+                reply.append(TextSendMessage("\U0001F469我：那個人後來往哪邊走了？\n\n\U0001F4DA館員：他朝我方向走過來啊！他給我一張紙條，我拿來看，上面是一堆文字跟數字，他叫我幫他查這張紙代表的東西，我就罵他啊，我說這不是我要提供的服務\n\n\U0001F469我：所以那是什麼？\n\n\U0001F4DA館員：我可以直接把紙條送給你\n\n請你進圖書館翻書，輸入那位讀者要找的答案是什麼？"))
                 line_bot_api.reply_message(event.reply_token, reply)
                 #紙條圖片
                 User_Info.objects.filter(uid=event.source.user_id).update(part=1)
@@ -189,7 +189,8 @@ def section5(event, User_Info):
             if event.message.text == "KC":
                 reply = [] #一次可傳多對話，至多五句
                 reply.append(TextSendMessage("我從第六排的窗戶內側拿到一本冊子，是紀錄兇手在資工系的生活"))
-                #日記照片
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/XcBW7NA.jpg",preview_image_url="https://i.imgur.com/XcBW7NA.jpg"))
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/rOiz7E8.jpg",preview_image_url="https://i.imgur.com/rOiz7E8.jpg"))
                 reply.append(TextSendMessage("\U0001F426大笨鳥的靈魂：那麼接下來去註冊組問問看，誰是這張學生證的主人吧！"))
                 reply.append(TextSendMessage("請輸入換發學生證要去哪棟大樓"))
                 line_bot_api.reply_message(event.reply_token, reply)
@@ -209,7 +210,7 @@ def section6(event, User_Info):
                 reply.append(TextSendMessage("\U0001F469我: 不好意思，我想問這個舊的學生證是誰的，後來換到哪個系了? 我強烈懷疑他偷了我的腳踏車，還輾過大笨鳥!"))
                 reply.append(TextSendMessage("\U0001F170職員A: 這個資訊涉及個人隱私，不能隨便洩漏"))
                 reply.append(TextSendMessage("\U0001F469我: 可是我已經去駐警隊報案了耶"))
-                reply.append(TextSendMessage("\U0001F170職員A: 在警衛來確認之前都不行\n\U0001F469我: 大笨鳥，我們在學校跑來跑去還是得不到答案，還是乾脆去外面警察局報案算了...?\n\U0001F171職員B: (偷偷地)同學你看起來這麼聰明，一定知道傅鐘的歷史在「幾度」。那個A齁，常常找人問這些問題，裝的自己什麼都知道一樣，這次一定要剉剉他的銳氣。只要告訴我答案，我就去幫你查學生證。\n請你輸入傅鐘的歷史在幾度？"))
+                reply.append(TextSendMessage("\U0001F170職員A: 在警衛來確認之前都不行\n\n\U0001F469我: 大笨鳥，我們在學校跑來跑去還是得不到答案，還是乾脆去外面警察局報案算了...?\n\n\U0001F171職員B: (偷偷地)同學你看起來這麼聰明，一定知道傅鐘的歷史在「幾度」。那個A齁，常常找人問這些問題，裝的自己什麼都知道一樣，這次一定要剉剉他的銳氣。只要告訴我答案，我就去幫你查學生證。\n\n請你輸入傅鐘的歷史在幾度？"))
                 #資工系謎題圖片
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=1)
@@ -218,7 +219,7 @@ def section6(event, User_Info):
         elif user_info.part == 1:
             if event.message.text == "150" or event.message.text == "150度":
                 reply = [] #一次可傳多對話，至多五句
-                reply.append(TextSendMessage("註: 若真的撿到遺失的學生證請交給駐警隊失物招領\n職員B告訴我兇手姓名以及他後來轉到社科院，我接著在FB查詢，發現10分鐘前兇手在醉月湖打卡"))
+                reply.append(TextSendMessage("註: 若真的撿到遺失的學生證請交給駐警隊失物招領\n\n職員B告訴我兇手姓名以及他後來轉到社科院，我接著在FB查詢，發現10分鐘前兇手在醉月湖打卡"))
                 #打卡畫面
                 reply.append(TextSendMessage("\U0001F426大笨鳥的靈魂：他在醉月湖！我們快追上去！"))
                 reply.append(TextSendMessage("到醉月湖後，輸入「我到醉月湖了」"))
@@ -246,7 +247,7 @@ def section7(event, User_Info):
         elif user_info.part == 1:
             if event.message.text == "被偷走的腳踏車":
                 reply = [] #一次可傳多對話，至多五句
-                reply.append(TextSendMessage("\U0001F9A2鵝：好，看在你這麼誠實的份上，我就請小動物們都一起來幫助你！但是你要先記得醉月湖的「緊急數字」才能確保這次行動的安全！\n請你輸入急救箱上的緊急號碼是多少？"))
+                reply.append(TextSendMessage("\U0001F9A2鵝：好，看在你這麼誠實的份上，我就請小動物們都一起來幫助你！但是你要先記得醉月湖的「緊急數字」才能確保這次行動的安全！\n\n請你輸入急救箱上的緊急號碼是多少？"))
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=2)
             else:
@@ -259,7 +260,7 @@ def section7(event, User_Info):
                 reply.append(TextSendMessage("\U0001F9A2鵝：腳踏車之外，這是你誠實相告的額外獎勵！(拿出一張金色的紙條)"))
                 #金色紙條圖片
                 reply.append(TextSendMessage("犯人其實覺得很對不起，希望到只有文字的學院之樹找他"))
-                reply.append(TextSendMessage("\U0001F469我：雖然拿到腳踏車了，但我們還是有必要知道真相！對吧大笨鳥？\n\U0001F426大笨鳥的靈魂：沒錯沒錯，走吧，學院之樹在社科院詩牆。\n據說社科院詩牆有這麼一首詩存在，到社科院詩牆後請輸入「我到詩牆了」"))
+                reply.append(TextSendMessage("\U0001F469我：雖然拿到腳踏車了，但我們還是有必要知道真相！對吧大笨鳥？\n\n\U0001F426大笨鳥的靈魂：沒錯沒錯，走吧，學院之樹在社科院詩牆。\n\n據說社科院詩牆有這麼一首詩存在，到社科院詩牆後請輸入「我到詩牆了」"))
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=0)
                 User_Info.objects.filter(uid=event.source.user_id).update(section=8)
@@ -274,7 +275,7 @@ def section8(event, User_Info):
             if event.message.text == "我到詩牆了":
                 reply = [] #一次可傳多對話，至多五句
                 reply.append(TextSendMessage("\U0001F469我：犯人居然把我的腳踏車丟到湖裡，想要毀屍滅跡，又給我這個紙條到底在想什麼？"))
-                reply.append(TextSendMessage("\U0001F426大笨鳥的靈魂：可能是某個讓犯人心神不寧的句子吧？\n請你輸入是什麼樣的句子讓犯人焦慮？"))
+                reply.append(TextSendMessage("\U0001F426大笨鳥的靈魂：可能是某個讓犯人心神不寧的句子吧？\n\n請你輸入是什麼樣的句子讓犯人焦慮？"))
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=1)
             else:
@@ -285,6 +286,7 @@ def section8(event, User_Info):
                 reply.append(TextSendMessage("犯人從社科圖走了出來，對我說了許多事，也向我道歉，最後他給我一個臉書連結叫我上去看看"))
                 reply.append(TextSendMessage("https://www.facebook.com/%E6%87%BA%E6%82%94%E4%B9%8B%E7%89%86-102158875809508"))
                 reply.append(TextSendMessage("\U0001F426大笨鳥的靈魂：謝謝你陪我找到犯人了，我可以安心的成佛了！希望你跟你之後的腳踏車一生平安"))
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/q8YsK2b.jpg",preview_image_url="https://i.imgur.com/q8YsK2b.jpg"))
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=0)
                 User_Info.objects.filter(uid=event.source.user_id).update(section=0) #玩完重置進度
