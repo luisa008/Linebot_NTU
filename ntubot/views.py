@@ -164,6 +164,7 @@ def section3(event, User_Info):
                 User_Info.objects.filter(uid=event.source.user_id).update(total_hint=F('total_hint')+1)
                 reply = [] #一次可傳多對話，至多五句
                 reply.append(TextSendMessage("以兩路牌指向為兩力方向，正解即是兩力合力所指向的最醒目建築物"))
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/FXp9sgi.jpg",preview_image_url="https://i.imgur.com/FXp9sgi.jpg"))
                 line_bot_api.reply_message(event.reply_token, reply)
             else:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage("想不出來可以請大笨鳥幫忙 請輸入「大笨鳥救救我」"))
@@ -311,6 +312,7 @@ def section7(event, User_Info):
                 User_Info.objects.filter(uid=event.source.user_id).update(total_hint=F('total_hint')+1)
                 reply = [] #一次可傳多對話，至多五句
                 reply.append(TextSendMessage("在醉月湖畔紅色急救箱上的數字是什麼呢？"))
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/c0Gjwh1.jpg",preview_image_url="https://i.imgur.com/c0Gjwh1.jpg"))
                 line_bot_api.reply_message(event.reply_token, reply)
             else:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage("想不出來可以請大笨鳥幫忙 請輸入「大笨鳥救救我」"))
