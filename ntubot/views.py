@@ -211,7 +211,7 @@ def section5(event, User_Info):
             if event.message.text == "我到資工系系館了" or event.message.text == "我到德田館了":
                 reply = [] #一次可傳多對話，至多五句
                 reply.append(TextSendMessage("\U0001F469我：我發現德田館外面的地上掉了一張紙，我觀察了一下，發現紙上的格子對應著資工系館的窗戶格子。"))
-                #資工系謎題圖片
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/1dweGIW.jpg",preview_image_url="https://i.imgur.com/1dweGIW.jpg"))
                 reply.append(TextSendMessage("請你輸入謎底是什麼？"))
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=1)
@@ -267,6 +267,7 @@ def section6(event, User_Info):
                 User_Info.objects.filter(uid=event.source.user_id).update(total_hint=F('total_hint')+1)
                 reply = [] #一次可傳多對話，至多五句
                 reply.append(TextSendMessage("以東方為0度，逆時針為正，例如正北方為90度"))
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/9bAoede.jpg",preview_image_url="https://i.imgur.com/9bAoede.jpg"))
                 line_bot_api.reply_message(event.reply_token, reply)
             else:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage("想不出來可以請大笨鳥幫忙 請輸入「大笨鳥救救我」"))
@@ -344,6 +345,7 @@ def section8(event, User_Info):
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=0)
                 User_Info.objects.filter(uid=event.source.user_id).update(section=0) #玩完重置進度
+                User_Info.objects.filter(uid=event.source.user_id).update(total_hint=0)
             elif event.message.text == "大笨鳥救救我":
                 User_Info.objects.filter(uid=event.source.user_id).update(total_hint=F('total_hint')+1)
                 reply = [] #一次可傳多對話，至多五句
