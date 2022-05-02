@@ -180,6 +180,7 @@ def section4(event, User_Info):
                 reply.append(TextSendMessage("\U0001F469我：請問你剛剛有看到什麼可疑、匆忙的人衝進圖書館嗎？\n\n\U0001F4DA館員：沒有耶，我們的讀者都是很文雅的，沒有什麼人會用衝的進來，而且圖書館也不能奔跑喔！\n\n\U0001F469我：嗯…好吧"))
                 reply.append(TextSendMessage("\U0001F4DA館員：啊，是說我好像有印象，有一個人整張臉皺成一團，看起來很緊張，褲子上沾滿一些紅色的汙漬。我就覺得很討厭呀！感覺就是剛去棒球場比完棒球或壘球，打輸了，但是好歹也把褲子上的紅土清理乾淨再進來吧？"))
                 reply.append(TextSendMessage("\U0001F469我：那個人後來往哪邊走了？\n\n\U0001F4DA館員：他朝我方向走過來啊！他給我一張紙條，我拿來看，上面是一堆文字跟數字，他叫我幫他查這張紙代表的東西，我就罵他啊，我說這不是我要提供的服務\n\n\U0001F469我：所以那是什麼？\n\n\U0001F4DA館員：我可以直接把紙條送給你\n\n請你進圖書館翻書，輸入那位讀者要找的答案是什麼？"))
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/t64NOqo.jpg",preview_image_url="https://i.imgur.com/t64NOqo.jpg"))
                 line_bot_api.reply_message(event.reply_token, reply)
                 #紙條圖片
                 User_Info.objects.filter(uid=event.source.user_id).update(part=1)
@@ -189,7 +190,7 @@ def section4(event, User_Info):
             if event.message.text == "報廢":
                 reply = [] #一次可傳多對話，至多五句
                 reply.append(TextSendMessage("(你不小心把書摔在地上，似乎有什麼東西掉出來…？)"))
-                #書打開圖片
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/LAnXc2K.jpg",preview_image_url="https://i.imgur.com/LAnXc2K.jpg"))
                 #學生證圖片
                 reply.append(TextSendMessage("撿起學生證後，發現他穿著某學院的領巾，於是我跑到兇手的系館找人。"))
                 reply.append(TextSendMessage("到目的地後，請輸入「我到XX系系館了」"))
