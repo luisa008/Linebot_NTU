@@ -191,7 +191,7 @@ def section4(event, User_Info):
                 reply = [] #一次可傳多對話，至多五句
                 reply.append(TextSendMessage("(你不小心把書摔在地上，似乎有什麼東西掉出來…？)"))
                 reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/LAnXc2K.jpg",preview_image_url="https://i.imgur.com/LAnXc2K.jpg"))
-                #學生證圖片
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/iclQMeN.jpg",preview_image_url="https://i.imgur.com/iclQMeN.jpg"))
                 reply.append(TextSendMessage("撿起學生證後，發現他穿著某學院的領巾，於是我跑到兇手的系館找人。"))
                 reply.append(TextSendMessage("到目的地後，請輸入「我到XX系系館了」"))
                 line_bot_api.reply_message(event.reply_token, reply)
@@ -300,10 +300,9 @@ def section7(event, User_Info):
         elif user_info.part == 2:
             if event.message.text == "27":
                 reply = [] #一次可傳多對話，至多五句
-                reply.append(TextSendMessage("（在小動物們的協助下，腳踏車成功被打撈出來）"))
-                reply.append(TextSendMessage("（我開心的手舞足蹈，跟著動物一起跳I like to move it）"))
+                reply.append(TextSendMessage("（在小動物們的協助下，腳踏車成功被打撈出來，我開心的手舞足蹈，跟著動物一起跳I like to move it）"))
                 reply.append(TextSendMessage("\U0001F9A2鵝：腳踏車之外，這是你誠實相告的額外獎勵！(拿出一張金色的紙條)"))
-                #金色紙條圖片
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/xjd0lV0.jpg",preview_image_url="https://i.imgur.com/xjd0lV0.jpg"))
                 reply.append(TextSendMessage("犯人其實覺得很對不起，希望到只有文字的學院之樹找他"))
                 reply.append(TextSendMessage("\U0001F469我：雖然拿到腳踏車了，但我們還是有必要知道真相！對吧大笨鳥？\n\n\U0001F426大笨鳥的靈魂：沒錯沒錯，走吧，學院之樹在社科院詩牆。\n\n據說社科院詩牆有這麼一首詩存在，到社科院詩牆後請輸入「我到詩牆了」"))
                 line_bot_api.reply_message(event.reply_token, reply)
