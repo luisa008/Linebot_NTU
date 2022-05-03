@@ -249,14 +249,14 @@ def section6(event, User_Info):
                 reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/0n3Gch7.jpg",preview_image_url="https://i.imgur.com/0n3Gch7.jpg"))
                 reply.append(TextSendMessage("\U0001F469我: 不好意思，我想問這個舊的學生證是誰的，後來換到哪個系了? 我強烈懷疑他偷了我的腳踏車，還輾過大笨鳥!"))
                 reply.append(TextSendMessage("\U0001F170職員A: 這個資訊涉及個人隱私，不能隨便洩漏\n\n\U0001F469我: 可是我已經去駐警隊報案了耶"))
-                reply.append(TextSendMessage("\U0001F170職員A: 在警衛來確認之前都不行\n\n\U0001F469我: 大笨鳥，我們在學校跑來跑去還是得不到答案，還是乾脆去外面警察局報案算了...?\n\n\U0001F171職員B: (偷偷地)同學你看起來這麼聰明，一定知道傅鐘的歷史在「幾度」。那個A齁，常常找人問這些問題，裝的自己什麼都知道一樣，這次一定要剉剉他的銳氣。只要告訴我答案，我就去幫你查學生證。\n\n請你輸入傅鐘的歷史在幾度？"))
+                reply.append(TextSendMessage("\U0001F170職員A: 在警衛來確認之前都不行\n\n\U0001F469我: 大笨鳥，我們在學校跑來跑去還是得不到答案，還是乾脆去外面警察局報案算了...?\n\n\U0001F171職員B: (偷偷地)同學你看起來這麼聰明，一定知道傅鐘的歷史在「哪邊」。那個A齁，常常找人問這些問題，裝的自己什麼都知道一樣，這次一定要剉剉他的銳氣。只要告訴我答案，我就去幫你查學生證。\n\n請你輸入傅鐘的歷史靠近哪個方位？"))
                 #資工系謎題圖片
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=1)
             else:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage("如果真的不知道可以上網查喔"))
         elif user_info.part == 1:
-            if event.message.text == "150" or event.message.text == "150度":
+            if event.message.text == "西" or event.message.text == "西邊":
                 reply = [] #一次可傳多對話，至多五句
                 reply.append(TextSendMessage("註: 若真的撿到遺失的學生證請交給駐警隊失物招領\n\n職員B告訴我兇手姓名以及他後來轉到社科院，我接著在FB查詢，發現10分鐘前兇手在醉月湖打卡"))
                 reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/uxjGueM.jpg",preview_image_url="https://i.imgur.com/uxjGueM.jpg"))
@@ -268,8 +268,7 @@ def section6(event, User_Info):
             elif event.message.text == "大笨鳥救救我":
                 User_Info.objects.filter(uid=event.source.user_id).update(total_hint=F('total_hint')+1)
                 reply = [] #一次可傳多對話，至多五句
-                reply.append(TextSendMessage("以東方為0度，逆時針為正，例如正北方為90度"))
-                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/9bAoede.jpg",preview_image_url="https://i.imgur.com/9bAoede.jpg"))
+                reply.append(TextSendMessage("請走入傅鐘內部，尋找記載歷史的文字靠近哪一方位?"))
                 line_bot_api.reply_message(event.reply_token, reply)
             else:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage("想不出來可以請大笨鳥幫忙 請輸入「大笨鳥救救我」"))
