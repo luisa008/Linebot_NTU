@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
+from django.db.models import F
  
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
@@ -84,6 +85,7 @@ def section1(event, User_Info):
             else:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage("請回答：「好吧」"))
         elif user_info.part == 3:
+            #max_hint = 1
             if event.message.text == "12222":
                 reply = [] #一次可傳多對話，至多五句
                 reply.append(TextSendMessage("註: 此號碼為虛構，請勿因為覺得好玩就去打擾水源阿伯"))
@@ -93,6 +95,11 @@ def section1(event, User_Info):
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=0)
                 User_Info.objects.filter(uid=event.source.user_id).update(section=2)
+            elif event.message.text == "大笨鳥救救我":
+                User_Info.objects.filter(uid=event.source.user_id).update(total_hint=F('total_hint')+1)
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("電話號碼的數字是菜單價格的「空洞」數，例如111沒有洞，104有兩個洞"))
+                line_bot_api.reply_message(event.reply_token, reply)
             else:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage("想不出來可以請大笨鳥幫忙 請輸入「大笨鳥救救我」"))
 
@@ -121,6 +128,11 @@ def section2(event, User_Info):
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=0)
                 User_Info.objects.filter(uid=event.source.user_id).update(section=3)
+            elif event.message.text == "大笨鳥救救我":
+                User_Info.objects.filter(uid=event.source.user_id).update(total_hint=F('total_hint')+1)
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("駐警隊前有棵樹有金屬支撐，下方有兩尊雕像，請輸入該樹品種俗名"))
+                line_bot_api.reply_message(event.reply_token, reply)
             else:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage("想不出來可以請大笨鳥幫忙 請輸入「大笨鳥救救我」"))
 
@@ -148,6 +160,12 @@ def section3(event, User_Info):
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=0)
                 User_Info.objects.filter(uid=event.source.user_id).update(section=4)
+            elif event.message.text == "大笨鳥救救我":
+                User_Info.objects.filter(uid=event.source.user_id).update(total_hint=F('total_hint')+1)
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("以兩路牌指向為兩力方向，正解即是兩力合力所指向的最醒目建築物"))
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/FXp9sgi.jpg",preview_image_url="https://i.imgur.com/FXp9sgi.jpg"))
+                line_bot_api.reply_message(event.reply_token, reply)
             else:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage("想不出來可以請大笨鳥幫忙 請輸入「大笨鳥救救我」"))
 
@@ -162,6 +180,7 @@ def section4(event, User_Info):
                 reply.append(TextSendMessage("\U0001F469我：請問你剛剛有看到什麼可疑、匆忙的人衝進圖書館嗎？\n\n\U0001F4DA館員：沒有耶，我們的讀者都是很文雅的，沒有什麼人會用衝的進來，而且圖書館也不能奔跑喔！\n\n\U0001F469我：嗯…好吧"))
                 reply.append(TextSendMessage("\U0001F4DA館員：啊，是說我好像有印象，有一個人整張臉皺成一團，看起來很緊張，褲子上沾滿一些紅色的汙漬。我就覺得很討厭呀！感覺就是剛去棒球場比完棒球或壘球，打輸了，但是好歹也把褲子上的紅土清理乾淨再進來吧？"))
                 reply.append(TextSendMessage("\U0001F469我：那個人後來往哪邊走了？\n\n\U0001F4DA館員：他朝我方向走過來啊！他給我一張紙條，我拿來看，上面是一堆文字跟數字，他叫我幫他查這張紙代表的東西，我就罵他啊，我說這不是我要提供的服務\n\n\U0001F469我：所以那是什麼？\n\n\U0001F4DA館員：我可以直接把紙條送給你\n\n請你進圖書館翻書，輸入那位讀者要找的答案是什麼？"))
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/t64NOqo.jpg",preview_image_url="https://i.imgur.com/t64NOqo.jpg"))
                 line_bot_api.reply_message(event.reply_token, reply)
                 #紙條圖片
                 User_Info.objects.filter(uid=event.source.user_id).update(part=1)
@@ -171,13 +190,18 @@ def section4(event, User_Info):
             if event.message.text == "報廢":
                 reply = [] #一次可傳多對話，至多五句
                 reply.append(TextSendMessage("(你不小心把書摔在地上，似乎有什麼東西掉出來…？)"))
-                #書打開圖片
-                #學生證圖片
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/LAnXc2K.jpg",preview_image_url="https://i.imgur.com/LAnXc2K.jpg"))
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/iclQMeN.jpg",preview_image_url="https://i.imgur.com/iclQMeN.jpg"))
                 reply.append(TextSendMessage("撿起學生證後，發現他穿著某學院的領巾，於是我跑到兇手的系館找人。"))
                 reply.append(TextSendMessage("到目的地後，請輸入「我到XX系系館了」"))
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=0)
                 User_Info.objects.filter(uid=event.source.user_id).update(section=5)
+            elif event.message.text == "大笨鳥救救我":
+                User_Info.objects.filter(uid=event.source.user_id).update(total_hint=F('total_hint')+1)
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("紙條上半部是一本書的索書號，下半部則是書內名詞的編號，請輸入該名詞"))
+                line_bot_api.reply_message(event.reply_token, reply)
             else:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage("想不出來可以請大笨鳥幫忙 請輸入「大笨鳥救救我」"))
 
@@ -189,7 +213,7 @@ def section5(event, User_Info):
             if event.message.text == "我到資工系系館了" or event.message.text == "我到德田館了":
                 reply = [] #一次可傳多對話，至多五句
                 reply.append(TextSendMessage("\U0001F469我：我發現德田館外面的地上掉了一張紙，我觀察了一下，發現紙上的格子對應著資工系館的窗戶格子。"))
-                #資工系謎題圖片
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/1dweGIW.jpg",preview_image_url="https://i.imgur.com/1dweGIW.jpg"))
                 reply.append(TextSendMessage("請你輸入謎底是什麼？"))
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=1)
@@ -206,6 +230,11 @@ def section5(event, User_Info):
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=0)
                 User_Info.objects.filter(uid=event.source.user_id).update(section=6)
+            elif event.message.text == "大笨鳥救救我":
+                User_Info.objects.filter(uid=event.source.user_id).update(total_hint=F('total_hint')+1)
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("「非赤為灰」對應到要看灰色橫條的部份\n\n「由天而地」代表要從上往下數\n\n「家中兄弟我名子叔」從伯仲叔季推出排第三"))
+                line_bot_api.reply_message(event.reply_token, reply)
             else:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage("想不出來可以請大笨鳥幫忙 請輸入「大笨鳥救救我」"))
 
@@ -236,6 +265,12 @@ def section6(event, User_Info):
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=0)
                 User_Info.objects.filter(uid=event.source.user_id).update(section=7)
+            elif event.message.text == "大笨鳥救救我":
+                User_Info.objects.filter(uid=event.source.user_id).update(total_hint=F('total_hint')+1)
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("以東方為0度，逆時針為正，例如正北方為90度"))
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/9bAoede.jpg",preview_image_url="https://i.imgur.com/9bAoede.jpg"))
+                line_bot_api.reply_message(event.reply_token, reply)
             else:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage("想不出來可以請大笨鳥幫忙 請輸入「大笨鳥救救我」"))
 
@@ -265,15 +300,20 @@ def section7(event, User_Info):
         elif user_info.part == 2:
             if event.message.text == "27":
                 reply = [] #一次可傳多對話，至多五句
-                reply.append(TextSendMessage("（在小動物們的協助下，腳踏車成功被打撈出來）"))
-                reply.append(TextSendMessage("（我開心的手舞足蹈，跟著動物一起跳I like to move it）"))
+                reply.append(TextSendMessage("（在小動物們的協助下，腳踏車成功被打撈出來，我開心的手舞足蹈，跟著動物一起跳I like to move it）"))
                 reply.append(TextSendMessage("\U0001F9A2鵝：腳踏車之外，這是你誠實相告的額外獎勵！(拿出一張金色的紙條)"))
-                #金色紙條圖片
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/xjd0lV0.jpg",preview_image_url="https://i.imgur.com/xjd0lV0.jpg"))
                 reply.append(TextSendMessage("犯人其實覺得很對不起，希望到只有文字的學院之樹找他"))
                 reply.append(TextSendMessage("\U0001F469我：雖然拿到腳踏車了，但我們還是有必要知道真相！對吧大笨鳥？\n\n\U0001F426大笨鳥的靈魂：沒錯沒錯，走吧，學院之樹在社科院詩牆。\n\n據說社科院詩牆有這麼一首詩存在，到社科院詩牆後請輸入「我到詩牆了」"))
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=0)
                 User_Info.objects.filter(uid=event.source.user_id).update(section=8)
+            elif event.message.text == "大笨鳥救救我":
+                User_Info.objects.filter(uid=event.source.user_id).update(total_hint=F('total_hint')+1)
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("在醉月湖畔紅色急救箱上的數字是什麼呢？"))
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/c0Gjwh1.jpg",preview_image_url="https://i.imgur.com/c0Gjwh1.jpg"))
+                line_bot_api.reply_message(event.reply_token, reply)
             else:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage("想不出來可以請大笨鳥幫忙 請輸入「大笨鳥救救我」"))
 
@@ -296,10 +336,23 @@ def section8(event, User_Info):
                 reply.append(TextSendMessage("犯人從社科圖走了出來，對我說了許多事，也向我道歉，最後他給我一個臉書連結叫我上去看看"))
                 reply.append(TextSendMessage("https://www.facebook.com/%E6%87%BA%E6%82%94%E4%B9%8B%E7%89%86-102158875809508"))
                 reply.append(TextSendMessage("\U0001F426大笨鳥的靈魂：謝謝你陪我找到犯人了，我可以安心的成佛了！希望你跟你之後的腳踏車一生平安"))
-                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/q8YsK2b.jpg",preview_image_url="https://i.imgur.com/q8YsK2b.jpg"))
+                #總使用提示數決定結局
+                total = user_info.total_hint
+                if(total <= 2): #困難
+                    reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/mRQfJxX.jpg",preview_image_url="https://i.imgur.com/mRQfJxX.jpg"))
+                elif(total > 2 and total <=5): #普通
+                    reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/q8YsK2b.jpg",preview_image_url="https://i.imgur.com/q8YsK2b.jpg"))
+                else: #簡單
+                    reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/i4tXQkr.jpg",preview_image_url="https://i.imgur.com/i4tXQkr.jpg"))
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=0)
                 User_Info.objects.filter(uid=event.source.user_id).update(section=0) #玩完重置進度
+                User_Info.objects.filter(uid=event.source.user_id).update(total_hint=0)
+            elif event.message.text == "大笨鳥救救我":
+                User_Info.objects.filter(uid=event.source.user_id).update(total_hint=F('total_hint')+1)
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("數字為詩牆每行的字數，「/」為分段，圖片中玻璃也有分段。三個數字希望玩家能找到該段落"))
+                line_bot_api.reply_message(event.reply_token, reply)
             else:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage("想不出來可以請大笨鳥幫忙 請輸入「大笨鳥救救我」"))
 
