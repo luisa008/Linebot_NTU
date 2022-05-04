@@ -1,1 +1,1 @@
-web: gunicorn mylinebot.wsgi
+web: python3 manage.py runserver
