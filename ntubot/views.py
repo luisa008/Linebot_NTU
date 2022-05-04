@@ -78,7 +78,7 @@ def section1(event, User_Info):
         elif user_info.part == 2:
             if event.message.text == "好吧":
                 reply = [] #一次可傳多對話，至多五句
-                reply.append(TextSendMessage("\U0001F963路人Ａ：阿伯的電話號碼就是大一女生宿舍B棟一樓的消防栓數量"))
+                reply.append(TextSendMessage("\U0001F963路人Ａ：阿伯的電話號碼就是大一女生宿舍B棟一樓的滅火器數量"))
                 reply.append(TextSendMessage("解出謎底後，請輸入二碼："))
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=3)
