@@ -88,7 +88,12 @@ DATABASES = {
     }
 }
 try:
-    DATABASES['default'] = dj_database_url.config()
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'db_name',
+    }
+}
 except NameError:
     pass
 
