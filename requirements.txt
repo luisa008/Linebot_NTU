@@ -2,3 +2,6 @@ django
 line-bot-sdk
 gunicorn
 whitenoise
+dj_static
+psycopg2
+dj_database_url
