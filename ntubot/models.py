@@ -11,7 +11,7 @@ class User_Info(models.Model):
     total_hint = models.PositiveIntegerField(default=0) #總提示
     is_side = models.BooleanField(default=False) #是否已開啟支線
     side_part = models.PositiveIntegerField(default=0) #支線內段落
-    side_ques = models.PositiveIntegerField(default=0) #支線關卡
+    side_ques = models.IntegerField(default=0) #支線關卡，-1為退出支線
 
     def __str__(self):
         return self.uid
