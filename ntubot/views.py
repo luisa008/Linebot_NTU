@@ -6,7 +6,7 @@ from django.db.models import F
  
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
-from linebot.models import MessageEvent, TextSendMessage, ImageSendMessage
+from linebot.models import MessageEvent, TextSendMessage, ImageSendMessage, TemplateSendMessage, ButtonsTemplate, MessageTemplateAction
 from ntubot.models import *
 import json
 from pathlib import Path
@@ -26,6 +26,19 @@ def section0(event, User_Info):
                 reply.append(TextSendMessage("\U0001F426大笨鳥的靈魂：我….我只是想吃蚯蚓而已….為什麼要這樣對我？什麼？你說你也不知道我在說什麼？但那明明就是你的腳踏車啊！！你真的不知道嗎？"))
                 reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/ra4iTVO.jpg",preview_image_url="https://i.imgur.com/ra4iTVO.jpg"))
                 reply.append(TextSendMessage("（你如果不知道請輸入: 「我不知道」；如果假裝知道則輸入「我知道」）"))
+                reply.append(TemplateSendMessage(alt_text='Buttons template',
+                                                 template=ButtonsTemplate(
+                                                    title='是否知道',
+                                                    text='你如果不知道請輸入：我不知道」；如果假裝知道則輸入「我知道」',
+                                                    actions=[
+                                                        MessageTemplateAction(
+                                                            label='我知道',
+                                                            text='我知道'
+                                                        ),
+                                                        MessageTemplateAction(
+                                                            label='我不知道',
+                                                            text='我不知道'
+                                                        )])))
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=1)
             else:
