@@ -25,10 +25,10 @@ def section0(event, User_Info):
                 reply.append(TextSendMessage("剛下課又餓又累的我，在尋找腳踏車的時候，卻怎麼樣也找不到我的腳踏車，只剩下大笨鳥週的車宣掉在地上。突然，我聽到一個奇怪的聲音……"))
                 reply.append(TextSendMessage("\U0001F426大笨鳥的靈魂：我….我只是想吃蚯蚓而已….為什麼要這樣對我？什麼？你說你也不知道我在說什麼？但那明明就是你的腳踏車啊！！你真的不知道嗎？"))
                 reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/ra4iTVO.jpg",preview_image_url="https://i.imgur.com/ra4iTVO.jpg"))
-                reply.append(TextSendMessage("（你如果不知道請輸入: 「我不知道」；如果假裝知道則輸入「我知道」）"))
+                #reply.append(TextSendMessage("（你如果不知道請輸入: 「我不知道」；如果假裝知道則輸入「我知道」）"))
                 reply.append(TemplateSendMessage(alt_text='Buttons template',
                                                  template=ButtonsTemplate(
-                                                    title='是否知道',
+                                                    title='請回答是否知道',
                                                     text='你如果不知道請輸入：我不知道」；如果假裝知道則輸入「我知道」',
                                                     actions=[
                                                         MessageTemplateAction(
@@ -74,7 +74,20 @@ def section1(event, User_Info):
                 reply = [] #一次可傳多對話，至多五句
                 reply.append(TextSendMessage("\U0001F963路人Ａ：同學，我看你骨骼驚奇，是百年難得一見的解謎奇才，我看你八成正在為腳踏車不見而煩惱吧？"))
                 reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/bjTA4bQ.jpg",preview_image_url="https://i.imgur.com/bjTA4bQ.jpg"))
-                reply.append(TextSendMessage("是的話，請回答：「大概是吧」"))
+                #reply.append(TextSendMessage("是的話，請回答：「大概是吧」"))
+                reply.append(TemplateSendMessage(alt_text='Buttons template',
+                                                 template=ButtonsTemplate(
+                                                    title='請回答',
+                                                    text='是的話，請回答：「大概是吧」',
+                                                    actions=[
+                                                        MessageTemplateAction(
+                                                            label='大概是吧',
+                                                            text='大概是吧'
+                                                        ),
+                                                        MessageTemplateAction(
+                                                            label='大概不是',
+                                                            text='大概不是'
+                                                        )])))
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=1)
             else:
@@ -83,7 +96,20 @@ def section1(event, User_Info):
             if event.message.text == "大概是吧":
                 reply = [] #一次可傳多對話，至多五句
                 reply.append(TextSendMessage("\U0001F963路人Ａ：我的腳踏車已經被拖吊好多次，水源阿伯的電話我已經倒背如流！我現在出一道謎題，如果你猜中，我就告訴你阿伯的電話！"))
-                reply.append(TextSendMessage("願意接受挑戰，請輸入「好吧」"))
+                #reply.append(TextSendMessage("願意接受挑戰，請輸入「好吧」"))
+                reply.append(TemplateSendMessage(alt_text='Buttons template',
+                                                 template=ButtonsTemplate(
+                                                    title='請回答',
+                                                    text='願意接受挑戰，請輸入「好吧」',
+                                                    actions=[
+                                                        MessageTemplateAction(
+                                                            label='好吧',
+                                                            text='好吧'
+                                                        ),
+                                                        MessageTemplateAction(
+                                                            label='不好',
+                                                            text='不好'
+                                                        )])))
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=2)
             else:
@@ -307,7 +333,24 @@ def section7(event, User_Info):
                 reply.append(TextSendMessage("\U0001F426大笨鳥的靈魂：你看！那台是你的腳踏車對吧?"))
                 reply.append(TextSendMessage("(我發現腳踏車被丟進湖中，在裏頭載浮載沉。想要跳下湖中把腳踏車拿回來，但是湖邊的水深危險等標語迫使我打消念頭。這個時候發現湖旁有救生圈可以使用，拋救生圈套住腳踏車把它撈起來，但自己一個人實在很吃力)"))
                 reply.append(TextSendMessage("此時，醉月湖中突然出現一隻鵝"))
-                reply.append(TextSendMessage("\U0001F9A2鵝：請問你掉的腳踏車是哪一台腳踏車呢？「金色的」？「銀色的」？還是「被偷走的腳踏車」？"))
+                #reply.append(TextSendMessage("\U0001F9A2鵝：請問你掉的腳踏車是哪一台腳踏車呢？「金色的」？「銀色的」？還是「被偷走的腳踏車」？"))
+                reply.append(TemplateSendMessage(alt_text='Buttons template',
+                                                 template=ButtonsTemplate(
+                                                    title='請回答',
+                                                    text='\U0001F9A2鵝：請問你掉的腳踏車是哪一台腳踏車呢？「金色的」？「銀色的」？還是「被偷走的腳踏車」？',
+                                                    actions=[
+                                                        MessageTemplateAction(
+                                                            label='金色的腳踏車',
+                                                            text='金色的腳踏車'
+                                                        ),
+                                                        MessageTemplateAction(
+                                                            label='銀色的腳踏車',
+                                                            text='銀色的腳踏車'
+                                                        ),
+                                                        MessageTemplateAction(
+                                                            label='被偷走的腳踏車',
+                                                            text='被偷走的腳踏車'
+                                                        )])))
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=1)
             else:
