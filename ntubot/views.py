@@ -217,6 +217,14 @@ def section5(event, User_Info):
                 reply.append(TextSendMessage("請你輸入謎底是什麼？"))
                 line_bot_api.reply_message(event.reply_token, reply)
                 User_Info.objects.filter(uid=event.source.user_id).update(part=1)
+            elif event.message.text == "我到電機系系館了":
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("葉秉宸：年輕人，不好意思啊，我在家裡養了六隻黑冠麻鷺好久了，大概三年了吧，現在他們都已長大成熟，發展出各自的興趣，該去讀大學了，能不能請你..."))
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/s2xc2fc.jpg",preview_image_url="https://i.imgur.com/s2xc2fc.jpg"))
+                reply.append(TextSendMessage("\U0001F469我：等等，黑冠麻鷺是什麼啊？\n\n葉秉宸：黑冠麻鷺就是大家俗稱的大笨鳥啊！不過我養的這幾隻才不笨，他們是大聰鳥。回到正題，可不可以麻煩你帶他們到不同的學院，讓她們進去就讀。他們分別要去：文學院、社科院、管理學院、理學院、工學院、生農學院。\n\n\U0001F469我：等等，這是什麼奇怪的要求？我才不要！\n\n（老人把六隻笨鳥的牽繩塞在你手上後，一溜煙跑走了）\n\n\U0001F469我：我...，什麼鬼啊？這下怎麼辦\n\n（六隻笨鳥眾目睽睽看著你）"))
+                reply.append(TextSendMessage("（支線劇情觸發！請你帶這六隻笨鳥分別到文學院、社科院、管理學院、理學院、工學院、生農學院吧！當你準備好要送他們到該學院時，請你輸入「笨鳥來去XX院讀書囉」）\n\n如果要繼續主線請輸入「回到主線」"))
+                line_bot_api.reply_message(event.reply_token, reply)
+                User_Info.objects.filter(uid=event.source.user_id).update(is_side=True)
             else:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage("請輸入「我到XX系系館了」"))
         elif user_info.part == 1:
@@ -349,6 +357,7 @@ def section8(event, User_Info):
                 User_Info.objects.filter(uid=event.source.user_id).update(part=0)
                 User_Info.objects.filter(uid=event.source.user_id).update(section=0) #玩完重置進度
                 User_Info.objects.filter(uid=event.source.user_id).update(total_hint=0)
+                User_Info.objects.filter(uid=event.source.user_id).update(is_side=False)
             elif event.message.text == "大笨鳥救救我":
                 User_Info.objects.filter(uid=event.source.user_id).update(total_hint=F('total_hint')+1)
                 reply = [] #一次可傳多對話，至多五句
@@ -356,6 +365,96 @@ def section8(event, User_Info):
                 line_bot_api.reply_message(event.reply_token, reply)
             else:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage("想不出來可以請大笨鳥幫忙 請輸入「大笨鳥救救我」"))
+
+def side_quest(event, User_Info):
+    user_info = User_Info.objects.get(uid=event.source.user_id)
+    if isinstance(event, MessageEvent):
+        if user_info.side_part == 0:
+            if event.message.text == "笨鳥來去文院讀書囉":
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("笨鳥：（喃喃自語）「那棵樹正悲壯地脫落高舉的葉子，這時我們都是老人了...」\n\n我：你在唸什麼啊？\n\n笨鳥：這是楊牧的詩，叫〈學院之樹〉，聽說文學院有一棵將近百年的老樹，這首詩寫的就是它，但最近因為生病而被移除了，真的太悲壯、太讓人惋惜了。你知道是哪棵樹嗎？\n\n（請你告訴笨鳥這棵樹是什麼樹）"))
+                line_bot_api.reply_message(event.reply_token, reply)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_part=1)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_ques=1)
+            elif event.message.text == "笨鳥來去社科院讀書囉":
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("笨鳥：欸欸，在鳥界裡其實一直有一個傳說，就是社科院三樓聽說有個空中花園，裡面有一棵非常巨大的樹矗立，並直竄不同的樓層，甚至在裡面還能聽課、聽演講...，你能告訴我是什麼神祕的地方嗎？好好奇！\n\n（請你告訴笨鳥這個地方是哪裡）"))
+                line_bot_api.reply_message(event.reply_token, reply)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_part=1)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_ques=2)
+            elif event.message.text == "笨鳥來去管理學院讀書囉":
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("笨鳥：聽說理工學院的學生們為了避免設備壞掉，會放乖乖，那如果是管院哩？\n\n我：管院管人的，可能只能拜拜求神保佑能遇到好人吧...（？）\n\n笨鳥：喔喔！這是我聽說的那個嘛？聽說在管院附近有一間很靈驗的廟，藏在小徑之中，告訴我是哪！帶我去！\n\n（請你告訴大本鳥那間廟叫什麼名字？）"))
+                line_bot_api.reply_message(event.reply_token, reply)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_part=1)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_ques=3)
+            elif event.message.text == "笨鳥來去理院讀書囉":
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("笨鳥:理學院歷史淵遠流長，聽說早在日治時期便製作出亞洲第一台直線加速器，也進行了第一次的人工撞擊原子核實驗。這麼厲害的歷史文物，好像在校內物理文物廳還可以看到ㄟ!不過文物廳是幾號館來著?\n\n(請告訴大笨鳥文物廳是幾號館)"))
+                line_bot_api.reply_message(event.reply_token, reply)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_part=1)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_ques=4)
+            elif event.message.text == "笨鳥來去工院讀書囉":
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("笨鳥:工學院有土木、化工、材料、醫療工程等各式各樣的系所，感覺都在跟複雜的點線面搏鬥，不過聽說有個系的系服竟然是極簡主義，令人「哭笑不得」?\n\n(請告訴大笨鳥這是哪個系的系服)"))
+                line_bot_api.reply_message(event.reply_token, reply)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_part=1)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_ques=5)
+            elif event.message.text == "笨鳥來去生農院讀書囉":
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("笨鳥:生農學院是我很常去的地方，我都去找我的動物好朋友玩，不像你們的Customer都去買牛奶。不過說到農業，台大好像有個地方跟稻米有很深的淵源，甚至有座紀念小屋，那麼愛吃飯的你應該知道是誰吧?\n\n(請告訴大笨鳥小屋是紀念誰的?)"))
+                line_bot_api.reply_message(event.reply_token, reply)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_part=1)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_ques=6)
+            elif event.message.text == "回到主線":
+                return 0 #退出支線
+            else:
+                line_bot_api.reply_message(event.reply_token, TextSendMessage("請你帶這六隻笨鳥分別到文學院、社科院、管理學院、理學院、工學院、生農學院吧！當你準備好要送他們到該學院時，請你輸入「笨鳥來去XX院讀書囉」）\n\n如果要繼續主線請輸入「回到主線」"))
+        elif user_info.side_part == 1:
+            if event.message.text == "印度黃檀樹" and user_info.side_ques == 1:
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("笨鳥：原來是印度黃檀。我後來去打聽，大棵的被移除了，但好像有他的分枝，小棵的長在前面，希望他能快快長大。也希望我能在文學院好好長大！"))
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/XZ9olPs.jpg",preview_image_url="https://i.imgur.com/XZ9olPs.jpg"))
+                line_bot_api.reply_message(event.reply_token, reply)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_part=0)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_ques=0)
+            elif event.message.text == "梁國樹會議廳" and user_info.side_ques == 2:
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("笨鳥：哇！竟然是個會議廳，我好喜歡這邊，希望之後趕快來修課！"))
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/EKkl7jL.jpg",preview_image_url="https://i.imgur.com/EKkl7jL.jpg"))
+                line_bot_api.reply_message(event.reply_token, reply)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_part=0)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_ques=0)
+            elif event.message.text == "伯公亭" and user_info.side_ques == 3:
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("笨鳥：土地公！土地公！請你保佑我接下來都能遇到好組員、好老師，不要遇到雷包。"))
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/iBq94OH.jpg",preview_image_url="https://i.imgur.com/iBq94OH.jpg"))
+                line_bot_api.reply_message(event.reply_token, reply)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_part=0)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_ques=0)
+            elif event.message.text == "二號館" and user_info.side_ques == 4:
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("笨鳥:不知道直線加速器能不能讓我飛得更快一點......"))
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/7U92dsK.jpg",preview_image_url="https://i.imgur.com/7U92dsK.jpg"))
+                line_bot_api.reply_message(event.reply_token, reply)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_part=0)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_ques=0)
+            elif event.message.text == "機械系" and user_info.side_ques == 5:
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("笨鳥: (阿這邊是要講什麼)"))
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/Xd3Sc3o.jpg",preview_image_url="https://i.imgur.com/Xd3Sc3o.jpg"))
+                line_bot_api.reply_message(event.reply_token, reply)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_part=0)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_ques=0)
+            elif event.message.text == "磯永吉" and user_info.side_ques == 6:
+                reply = [] #一次可傳多對話，至多五句
+                reply.append(TextSendMessage("笨鳥:對對對就是他!我吃米雖不知道米價，但總要記得誰種出好吃的米。"))
+                reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/PRYHgM7.jpg",preview_image_url="https://i.imgur.com/PRYHgM7.jpg"))
+                line_bot_api.reply_message(event.reply_token, reply)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_part=0)
+                User_Info.objects.filter(uid=event.source.user_id).update(side_ques=0)
+            else:
+                line_bot_api.reply_message(event.reply_token, TextSendMessage("請你仔細觀察周邊環境，有必要時可以上網查詢"))
 
 @csrf_exempt
 def callback(request):
@@ -391,12 +490,20 @@ def callback(request):
             elif user_info.section == 4:
                 section4(event, User_Info)
             elif user_info.section == 5:
+                if user_info.is_side:
+                    side_quest(event, User_Info)
                 section5(event, User_Info)
             elif user_info.section == 6:
+                if user_info.is_side:
+                    side_quest(event, User_Info)
                 section6(event, User_Info)
             elif user_info.section == 7:
+                if user_info.is_side:
+                    side_quest(event, User_Info)
                 section7(event, User_Info)
             elif user_info.section == 8:
+                if user_info.is_side:
+                    side_quest(event, User_Info)
                 section8(event, User_Info)
         # print(user)
         file = open("ntubot/user.json", "w")
