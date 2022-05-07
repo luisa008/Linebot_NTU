@@ -9,6 +9,9 @@ class User_Info(models.Model):
     part = models.PositiveIntegerField(default=0) #關卡內段落
     hint = models.PositiveIntegerField(default=0) #提示段落
     total_hint = models.PositiveIntegerField(default=0) #總提示
+    is_side = models.BooleanField(default=False) #是否已開啟支線
+    side_part = models.PositiveIntegerField(default=0) #支線內段落
+    side_ques = models.PositiveIntegerField(default=0) #支線關卡
 
     def __str__(self):
         return self.uid
