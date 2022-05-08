@@ -97,7 +97,7 @@ DATABASES = {
         'NAME': 'mydb',                     
         'USER': 'myuser',
         'PASSWORD': 'password',
-        'HOST': SERVER_HOST,                  
+        'HOST': '',                    
         'PORT': '',                      # Set to empty string for default.
     }
 }
