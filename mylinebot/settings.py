@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'mylinebot.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mydb',                     
+        'NAME': BASE_DIR / 'mydb',                     
         'USER': 'myuser',
         'PASSWORD': 'password',
         'HOST': '',                    
