@@ -491,7 +491,7 @@ def side_quest(event, User_Info):
             else:
                 line_bot_api.reply_message(event.reply_token, TextSendMessage("請你帶這六隻笨鳥分別到文學院、社科院、管理學院、理學院、工學院、生農學院吧！當你準備好要送他們到該學院時，請你輸入「笨鳥來去XX院讀書囉」）\n\n如果要繼續主線請輸入「回到主線」"))
         elif user_info.side_part == 1:
-            if event.message.text == "印度黃檀樹" and user_info.side_ques == 1:
+            if (event.message.text == "印度黃檀樹" or event.message.text == "印度黃檀") and user_info.side_ques == 1:
                 reply = [] #一次可傳多對話，至多五句
                 reply.append(TextSendMessage("笨鳥：原來是印度黃檀。我後來去打聽，大棵的被移除了，但好像有他的分枝，小棵的長在前面，希望他能快快長大。也希望我能在文學院好好長大！"))
                 reply.append(ImageSendMessage(original_content_url="https://i.imgur.com/XZ9olPs.jpg",preview_image_url="https://i.imgur.com/XZ9olPs.jpg"))
